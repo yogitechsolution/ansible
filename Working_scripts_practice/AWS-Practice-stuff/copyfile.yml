@@ -1,0 +1,20 @@
+[ansible@ip-172-31-26-218 ec2-user]$ cat /home/ansible/playbook/copyfile.yml
+--- # deploy file from Ansible Server to nodes
+
+- hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  vars:
+   pkgname: httpd
+  tasks:
+    - name: copy eelex file onto nodes
+      copy:
+        src: /etc/ansible/roles/eelex/files/eelex.jpg
+        dest: /home/ansible/filefromserver/
+    - name: copy eelord file onto nodes
+      copy:
+        src: /etc/ansible/roles/eelord/files/eelord.jpg
+        dest: /home/ansible/filefromserver/
+
+[ansible@ip-172-31-26-218 ec2-user]$

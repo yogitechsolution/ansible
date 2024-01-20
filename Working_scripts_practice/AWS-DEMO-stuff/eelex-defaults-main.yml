@@ -1,0 +1,5 @@
+# defaults file for /etc/ansible/roles/eelex[ansible@ip-172-31-26-218 eelord]$ pwd
+/home/ansible/eelord
+[ansible@ip-172-31-26-218 eelord]$ cat eelex/defaults/main.yml
+---
+# defaults file for /etc/ansible/roles/eelex[ansible@ip-172-31-26-218 eelord]$

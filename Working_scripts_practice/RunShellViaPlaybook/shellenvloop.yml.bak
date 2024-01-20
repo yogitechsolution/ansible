@@ -1,0 +1,31 @@
+--- # Ansible-playbook shellenvloop.yml
+- name: Create 2 test files under tmp dir
+  gather_facts: false
+  hosts: Axotec #localhost
+  tasks:
+    - name: use arg, env, and loop with shell
+      delegate_to: localhost
+      shell: echo "Hello World" > $TARGET # Redirect in this target env variable
+      args: # by defaults it runs on home directory of ansible user
+        chdir: /tmp # can change to run on to other directory e.g. tmp
+      environment:
+        TARGET: "{{item}}" # Set the target env var to loop through each item in the list
+      loop:
+        - test_file1
+        - test_file2
+
+
+===================
+
+ansible-playbook shellenvloop.yml
+
+ls /tmp
+
+cat /tmp/test_file1
+o/p
+Hello World
+
+cat /tmp/test_file2
+o/p
+Hello World
+

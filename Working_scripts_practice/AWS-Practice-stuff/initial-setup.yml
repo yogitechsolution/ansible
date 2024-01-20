@@ -1,0 +1,16 @@
+---Need to test code
+
+root@software-ansible-thinkcentre:/home/ansible/playbook# cat initial-setup.yml
+---
+- name: Initial Setup
+  hosts: axotec
+  become_user: ansible
+  become: true
+  tasks:
+  - name: Add SSH key for root
+    lineinfile:
+      path: ~/.ssh/authorized_keys
+      create: yes
+      state: present
+      line: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDBgOPucDVyVDglsJjyjQ+ACiZ58Ysr72plZSNRaFsdveyqe2x2yKdbIpOE3kyTcCAMJ9CIevzo11X9lkCE9BQZTThKVxbZ91L9KqLg6MHmQMY3PjjbLcYFosh5vbRkZhkZYJpA6+IVQMc62M94hL8HAR43QNEJusqJjDRhKzGGRKXVL7J2ha5pGTgS85FYYtmftOCyq5IpNLKqCIE8aiHWQDNQWbVFHqoSSVj0sXhRjnyU/+NllmSR674ERv6xowYTIHOmZ76NsCNvOtdkNcdTpr6SJ3JBhJO2M8deKLiFx92NqbME7KvXdSopIf9bKZD9ox3BSI9OBENZYoWLFp+agw3BqDP6uvTNpEsctrkkpaoHNkQ/BeIeN0z+RpzD9hNzNA1HyGP8Uefib0ISothBQxKF0k60vvf9BIH3KZnmW7aIpteKZ+bSKg/y5zbFh5FF5LaMhdmyDz/0d32Wd1zTfVU6VNEHovvtc0D3JxX8XnpuMSjksQGM3RnQV2NM8bM= ansible@software-ansible-thinkcentre'
+root@software-ansible-thinkcentre:/home/ansible/playbook#

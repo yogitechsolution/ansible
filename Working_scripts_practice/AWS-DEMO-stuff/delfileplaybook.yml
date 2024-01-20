@@ -1,0 +1,10 @@
+[ansible@ip-172-31-26-218 ec2-user]$ cat /home/ansible/delfileplaybook.yml
+--- # Delete file
+- hosts: all
+  user: ansible
+  become: yes
+  connection: ssh
+  tasks:
+    - name: Remove golden image from server all nodes
+      shell: cd /home/ansible/filefromserver && find -mindepth 1 -maxdepth 1 -print0 | xargs -                        0 rm -rf --
+[ansible@ip-172-31-26-218 ec2-user]$

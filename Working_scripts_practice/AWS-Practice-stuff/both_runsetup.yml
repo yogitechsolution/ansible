@@ -1,0 +1,12 @@
+[ansible@ip-172-31-26-218 playbook]$ cat both_runsetup.yml
+--- # Install Apache
+- hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  roles:
+  - eelex
+  - eelord
+  #- ftp
+
+[ansible@ip-172-31-26-218 playbook]$

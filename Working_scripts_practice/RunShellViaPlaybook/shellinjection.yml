@@ -1,0 +1,17 @@
+--- # Ansible-playbook shellinjection.yml
+- name: Put message var value in test_file
+  gather_facts: false
+  hosts: Axotec #localhost
+  vars:
+    message: Hello, World!
+  tasks:
+    - name: echo contect to test_file
+      delegate_to: localhost
+      shell: "echo {{ message }} > /tmp/test_file" # Put msg var value to test file
+      
+      
+ls /tmp
+
+cat /tmp/test_file
+o/p
+Hello World

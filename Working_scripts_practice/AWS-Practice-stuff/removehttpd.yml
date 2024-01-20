@@ -1,0 +1,16 @@
+ssh ansible@ip-172-31-26-218.eu-north-1.compute.internal "ansible-playbook removehttpd.yml"
+
+
+
+[ansible@ip-172-31-26-218 playbook]$ cat removehttpd.yml
+--- # Uninstall httpd on linux server
+- hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  vars:
+   pkgname: httpd
+  tasks:
+    - name: Uninstall HTTPD on linux
+      action: yum name='{{pkgname}}' state=absent
+[ansible@ip-172-31-26-218 playbook]$

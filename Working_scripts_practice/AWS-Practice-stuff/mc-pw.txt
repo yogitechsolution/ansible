@@ -1,0 +1,54 @@
+Axotec m/c:
+ansible@192.168.1.106 (192.168.1.87)
+pw: Eelex807
+
+Bitbucket: app password
+U: emailid
+P: qStB4arzXYrjZFmNGLYY
+
+U: root
+P: breakd7
+
+U: su - root
+P: 
+(Komkommer5)
+
+For ssh into the actual axotec (Node) -  agent1
+192.168.1.107
+U: root
+P: axotec
+
+Ubuntu server created by ProgIT (used for Ansible backups on daily basis)
+IP: 192.168.1.140
+U: lab
+P: Quiz2022
+
+U: su - root
+P: BoatForce2017
+
+-------
+
+Jenkins machine:
+URL: http://192.168.1.184:8080/
+U: admin
+P: Eelex808
+
+for SSH:
+IP: 192.168.1.184
+port: 2222
+
+U: lubuntu
+P: Eelex808
+
+Jenkins agent: agent1
+IP: 192.168.1.107
+U: root
+P: axotec
+
+Note: run command "println "ifconfig".execute().text" in 'Script Console' of Jenkins to findout related IP's in connected to Jenkins.
+
+-----Git local repo------
+C:\git\devops
+
+
+

@@ -1,0 +1,20 @@
+ansible@software-ansible-thinkcentre:~/shellscriptyogi$ cat shellinjectionsol.yml
+--- # Ansible-playbook shellinjection.yml
+- name: Put message var value in test_file
+  gather_facts: false
+  hosts: Axotec #localhost
+  vars:
+    message: hacked > /tmp/hacked && echo hacked  #string
+  tasks:
+    - name: echo contect to test_file
+      delegate_to: localhost
+      shell: "echo {{ message | quote }} > /tmp/test_file" # pipe|quote to avoid shell injection
+      
+ 
+ ansible-playbook shellinjectionsol.yml
+
+ls /tmp
+
+cat /tmp/test_file
+o/p
+hacked > /tmp/hacked && echo hacked

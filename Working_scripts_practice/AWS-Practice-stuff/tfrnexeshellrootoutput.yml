@@ -1,0 +1,13 @@
+root@software-ansible-thinkcentre:/home/ansible/playbookyogi# cat tfrnexeshellrootoutput.yml
+---
+- name: Transfer and execute a script.
+  hosts: axotec
+  remote_user: root
+  #sudo: yes
+  tasks:
+     - name: Transfer the script
+       copy: src=/home/ansible/shellscriptyogi/helloworld.sh dest=/root mode=0777
+
+     - name: Execute the script
+       shell: sh /root/helloworld.sh > /tmp/shell_output
+root@software-ansible-thinkcentre:/home/ansible/playbookyogi#

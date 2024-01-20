@@ -1,0 +1,27 @@
+
+---Need to test
+
+root@software-ansible-thinkcentre:/home/ansible/playbook# cat servers.yml
+## Playbook1 to setup remote host: user+password+sudorights
+---
+- hosts: axotec
+  remote_user: root
+  vars:
+    common_user_name: 'ansible'
+  tasks:
+    - name: "Create a secondary, non-root user"
+      user:
+        name: "{{ common_user_name }}"
+        password: '$6$L90RtJDE$Kd03KwcgLyR1.NEhBcL8URPxz9cBB8hZNOuOkUt0W.Foj.DUtiigVxa0FJNvqqOBp7aKupFqdc.78psaEwmUr/'
+        shell: /bin/bash
+    - name: Add authorized key
+      authorized_key:
+        user: "{{ common_user_name }}"
+        key: "{{lookup ('file', '~/.ssh/id_rsa.pub')}}"
+    - name: Add normal user to sudoers
+      lineinfile:
+        dest: /etc/sudoers
+        regexp: "{{ common_user_name }} ALL"
+        line: "{{ common_user_name }} ALL=(ALL) ALL"
+        state: present
+root@software-ansible-thinkcentre:/home/ansible/playbook#

@@ -1,0 +1,11 @@
+[ansible@ip-172-31-26-218 ~]$ cat task.yml
+
+--- # My second testing yaml playbook(target+task)
+- hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  tasks:
+    - name: Install HTTPD on linux
+      action: yum name=httpd state=installed
+[ansible@ip-172-31-26-218 ~]$

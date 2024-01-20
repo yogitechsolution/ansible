@@ -1,0 +1,10 @@
+root@software-ansible-thinkcentre:/home/ansible/playbookyogi# cat scan1.yml
+---
+- name: Execute shell script on localhost.
+  hosts: localhost #axotec
+  user: root
+  tasks:
+     - name: Execute the script
+       become: "true"
+       shell: sh /home/ansible/shellscriptyogi/scan1.sh > /tmp/shell_output
+root@software-ansible-thinkcentre:/home/ansible/playbookyogi#

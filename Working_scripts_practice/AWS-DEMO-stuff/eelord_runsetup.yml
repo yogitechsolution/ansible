@@ -1,0 +1,9 @@
+[ansible@ip-172-31-26-218 playbook]$ cat eelord_runsetup.yml
+--- # Run master playbbok based on selected roles
+- hosts: eelord_host ## Execute on this host only
+  user: ansible ## Common user created to do the job
+  become: yes ## Perform tasks with sudo priviledge
+  roles: ## do the job for only mentioned roles
+  #- eelex
+  - eelord
+[ansible@ip-172-31-26-218 playbook]$

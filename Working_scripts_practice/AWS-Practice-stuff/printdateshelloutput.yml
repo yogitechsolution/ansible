@@ -1,0 +1,34 @@
+root@software-ansible-thinkcentre:/home/ansible/shellscriptyogi# cat printdateshelloutput.yml
+--- #Print user name
+
+- name: Run the test playbook
+  gather_facts: false
+  hosts: Axotec #localhost
+  tasks:
+    - name: Get the username running this playbook
+      become: false
+      local_action: command whoami
+      register: username_on_the_host
+
+    - name: Display the User name
+      ansible.builtin.debug:
+        msg: "Hello User '{{ username_on_the_host.stdout }}' "
+
+    - name: Run shell script via SHELL  module
+      delegate_to: localhost #127.0.1.1
+      #      shell: echo "Hello World" > /tmp/shell_output
+      shell: sh datesystemname.sh > /tmp/shell_output
+      register: shell_output
+
+    - name: Run shell script via COMMAND module
+      delegate_to: localhost #127.0.1.1
+      #      command: echo "Hello World" > /tmp/command_output
+      command: sh datesystemname.sh > /tmp/command_output
+      register: command_output
+
+    - name: debug shell_output
+      debug: var=shell_output
+
+    - name: debug command_output
+      debug: var=command_output
+root@software-ansible-thinkcentre:/home/ansible/shellscriptyogi#

@@ -1,0 +1,17 @@
+trying SSH connection:
+----------------
+---for adding host (ip address)
+ cat /etc/ansible/hosts
+
+ssh lab@192.168.1.140
+ssh root@192.168.1.107
+
+ssh-copy-id -i user@localhost
+ssh-copy-id -i user@servers_in_inventory
+
+
+ansible target1 -m ping -i /etc/ansible/hosts  --ask-pass
+o/p
+worked
+
+ansible all -m ping -vvv

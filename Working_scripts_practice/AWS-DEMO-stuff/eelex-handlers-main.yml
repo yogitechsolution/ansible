@@ -1,0 +1,8 @@
+# defaults file for /etc/ansible/roles/eelex[ansible@ip-172-31-26-218 eelord]$ pwd
+/home/ansible/eelord
+[ansible@ip-172-31-26-218 eelord]$ cat eelex/handlers/main.yml
+---
+# handlers file for /etc/ansible/roles/eelex
+- name: restart apache
+  service: name=httpd state=restarted
+[ansible@ip-172-31-26-218 eelord]$

@@ -1,0 +1,15 @@
+ssh ansible@ip-172-31-26-218.eu-north-1.compute.internal "ansible-playbook variable.yml"
+
+
+[ansible@ip-172-31-26-218 ~]$ cat variable.yml
+--- # My third testing yaml playbook(target+task+var)
+- hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  vars:
+   pkgname: httpd
+  tasks:
+    - name: Install HTTPD on linux
+      action: yum name='{{pkgname}}' state=installed
+[ansible@ip-172-31-26-218 ~]$

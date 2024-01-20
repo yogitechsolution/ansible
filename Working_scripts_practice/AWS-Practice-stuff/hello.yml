@@ -1,0 +1,8 @@
+root@software-ansible-thinkcentre:/home/ansible/playbookyogi# cat hello.yml
+
+--- # Hello from Ansible
+- hosts: localhost
+  become: true
+  tasks:
+    - name: Print message
+      debug: msg="Hello from Ansible!!"

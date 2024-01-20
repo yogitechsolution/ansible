@@ -1,0 +1,24 @@
+root@software-ansible-thinkcentre:/home/ansible/shellscriptyogi# cat runshellhelloworld.yml
+--- # Test to run shell script via playbook
+- name: Run the test playbook
+  gather_facts: false
+  hosts: Axotec #localhost
+  tasks:
+    - name: Run shell script via SHELL  module
+      delegate_to: localhost #127.0.1.1
+      #      shell: echo "Hello World" > /tmp/shell_output
+      shell: sh helloworld.sh > /tmp/shell_output
+      register: shell_output
+
+    - name: Run shell script via COMMAND module
+      delegate_to: localhost #127.0.1.1
+      #      command: echo "Hello World" > /tmp/command_output
+      command: sh helloworld.sh > /tmp/command_output
+      register: command_output
+
+    - name: debug shell_output
+      debug: var=shell_output
+
+    - name: debug command_output
+      debug: var=command_output
+root@software-ansible-thinkcentre:/home/ansible/shellscriptyogi#

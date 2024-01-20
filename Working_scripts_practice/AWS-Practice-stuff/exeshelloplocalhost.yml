@@ -1,0 +1,8 @@
+root@software-ansible-thinkcentre:/home/ansible/playbookyogi# cat exeshelloplocalhost.yml
+---
+- name: Execute shell script on localhost.
+  hosts: localhost #axotec
+  tasks:
+     - name: Execute the script
+       shell: sh /home/ansible/shellscriptyogi/helloworld.sh > /tmp/shell_output
+root@software-ansible-thinkcentre:/home/ansible/playbookyogi#

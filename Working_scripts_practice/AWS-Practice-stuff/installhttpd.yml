@@ -1,0 +1,18 @@
+via shell command:
+ssh ansible@ip-172-31-26-218.eu-north-1.compute.internal "ansible-playbook installhttpd.yml"
+
+via playbook:
+[ansible@ip-172-31-26-218 playbook]$ cat installhttpd.yml
+--- # Install httpd on linux server
+- hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  vars:
+   pkgname: httpd
+  tasks:
+    - name: Install HTTPD on linux
+      action: yum name='{{pkgname}}' state=installed
+[ansible@ip-172-31-26-218 playbook]$
+
+

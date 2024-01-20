@@ -1,0 +1,17 @@
+Not working for vault---
+
+[ansible@ip-172-31-26-218 playbook]$ cat vault_encrypt.yml
+--- # Conditional playbook
+- hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  tasks:
+    - name: Install apache server for debian family
+      command: apt-get -y install apache2
+      when: ansible_os_family == "Debian"
+    - name: install httpd for redhat family
+      command: yum -y install httpd
+      when: ansible_os_family == "RedHat"
+
+[ansible@ip-172-31-26-218 playbook]$

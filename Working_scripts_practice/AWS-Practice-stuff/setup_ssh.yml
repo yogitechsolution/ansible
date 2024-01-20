@@ -1,0 +1,14 @@
+root@software-ansible-thinkcentre:/home/ansible/playbookyogi# cat setup_ssh.yml
+### to setup public key authentication
+---
+- hosts: Axotec-ubuntu
+  remote_user: root
+  vars:
+    authorized_key_list:
+      - name: root
+        authorized_keys:
+         - key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+           state: present
+  roles:
+    - { role: GROG.authorized-key }
+root@software-ansible-thinkcentre:/home/ansible/playbookyogi#

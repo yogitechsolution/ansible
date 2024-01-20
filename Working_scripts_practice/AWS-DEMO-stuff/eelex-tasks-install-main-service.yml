@@ -1,0 +1,17 @@
+[ansible@ip-172-31-26-218 eelord]$ pwd
+/home/ansible/eelord
+[ansible@ip-172-31-26-218 eelord]$ cat eelex/tasks/install.yml
+---
+- name: Install httpd Package
+  yum: name=httpd state=latest
+[ansible@ip-172-31-26-218 eelord]$ cat eelex/tasks/main.yml
+---
+# tasks file for /etc/ansible/roles/eelex
+- import_tasks: install.yml
+- import_tasks: copyfile.yml
+- import_tasks: service.yml
+[ansible@ip-172-31-26-218 eelord]$ cat eelex/tasks/service.yml
+---
+- name: Start and enable httpd service
+  service: name=httpd state=restarted enabled=yes
+[ansible@ip-172-31-26-218 eelord]$

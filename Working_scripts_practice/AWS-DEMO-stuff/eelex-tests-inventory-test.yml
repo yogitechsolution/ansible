@@ -1,0 +1,11 @@
+    - /etc/ansible/roles/eelex[ansible@ip-172-31-26-218 eelord]$ pwd
+/home/ansible/eelord
+[ansible@ip-172-31-26-218 eelord]$ cat eelex/tests/inventory
+localhost
+
+[ansible@ip-172-31-26-218 eelord]$ cat eelex/tests/test.yml
+---
+- hosts: localhost
+  remote_user: root
+  roles:
+    - /etc/ansible/roles/eelex[ansible@ip-172-31-26-218 eelord]$

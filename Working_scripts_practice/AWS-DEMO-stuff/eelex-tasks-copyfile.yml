@@ -1,0 +1,9 @@
+[ansible@ip-172-31-26-218 eelord]$ pwd
+/home/ansible/eelord
+[ansible@ip-172-31-26-218 eelord]$ cat eelex/tasks/copyfile.yml
+---
+- name: Copy golden image file
+  copy: src=files/yogi.jpg dest=/home/ansible/filefromserver/
+  notify:
+  - restart apache
+[ansible@ip-172-31-26-218 eelord]$

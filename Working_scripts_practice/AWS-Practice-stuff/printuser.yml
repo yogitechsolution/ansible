@@ -1,0 +1,20 @@
+root@software-ansible-thinkcentre:/home/ansible/shellscriptyogi# cat printuser.yml
+--- #Print user name
+
+- name: Run the test playbook
+  gather_facts: false
+  hosts: Axotec #localhost
+  tasks:
+    - name: Get the username running this playbook
+      become: false
+      local_action: command whoami
+      register: username_on_the_host
+
+    - name: Display the User name
+      ansible.builtin.debug:
+        msg: "Hello User '{{ username_on_the_host.stdout }}' "
+
+    - name: Run the below script
+      delegate_to: localhost #127.0.1.1
+      command: sh helloworld.sh
+root@software-ansible-thinkcentre:/home/ansible/shellscriptyogi#

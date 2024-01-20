@@ -1,0 +1,16 @@
+[ansible@ip-172-31-26-218 playbook]$ cat handlers.yml
+--- # My 4th testing yaml playbook(target+task+var+handlers)
+- hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  vars:
+   pkgname: httpd
+  tasks:
+    - name: Install HTTPD on linux
+      action: yum name='{{pkgname}}' state=installed
+      notify: restart HTTPD
+  handlers:
+    - name: restart HTTPD
+      action: service name='{{pkgname}}' state=restarted
+[ansible@ip-172-31-26-218 playbook]$

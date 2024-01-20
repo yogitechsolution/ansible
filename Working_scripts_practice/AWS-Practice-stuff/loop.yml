@@ -1,0 +1,16 @@
+--- # My 5th testing yaml playbook(target+task+loop)
+- hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  tasks:
+          - name: add list of users in my nodes
+            user: name='{{item}}' state=present
+            with_items:
+              - Yogi
+              - Philip
+              - Ludvik
+              - Daniel
+              - Sarah
+              - Johan
+[ansible@ip-172-31-26-218 playbook]$

@@ -1,0 +1,12 @@
+[ansible@ip-172-31-26-218 ec2-user]$ cat /home/ansible/playbook/uninstall_apache.yml
+--- # Uninstall Apache and delete golden image
+- hosts: all
+  user: ansible
+  become: yes
+  connection: ssh
+  vars:
+   pkgname: httpd
+  tasks:
+    - name: Uninstall HTTPD on linux
+      action: yum name='{{pkgname}}' state=absent
+[ansible@ip-172-31-26-218 ec2-user]$
