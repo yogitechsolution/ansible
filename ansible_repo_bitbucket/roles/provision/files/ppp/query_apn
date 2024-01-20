@@ -1,0 +1,96 @@
+#!/usr/bin/python3
+
+import serial
+import json
+import argparse
+import syslog
+
+_APN_CONF_PAT = "AT+CGDCONT=1,\"IP\",\"{apn}\""
+
+class APNDatabase:
+    def __init__(self, json_file):
+        with open(json_file) as f:
+            json_data = json.load(f)
+            self.records = json_data['valid_apns']
+            self.default = json_data['default']
+
+    def getAPN(self, isp):
+        for record in self.records:
+            if record['isp'] == isp:
+                return [record['apn'], True]
+        return [self.getDefaultAPN(), False]
+
+    def getDefaultAPN(self):
+        return self.records[self.default]['apn']
+
+def decodeISP(raw):
+    parts = raw.split(',')
+    if len(parts) != 2 or len(parts[0]) < 7 or parts[0][:7] != "+CSPN: ":
+        return None
+    else:
+        return parts[0][7:].strip("\"")
+
+def readISP(serial):
+    serial.write("at+cspn?\r\n".encode())
+    lines = serial.readlines()
+    serial.flush()
+    for line in lines:
+        decoded = decodeISP(line.decode())
+        if decoded is not None:
+            return decoded
+    return None
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Look up APN based on Internet Service Provider")
+    parser.add_argument("-d", "--database", 
+                        type=str, 
+                        default="/etc/ppp/apn_database.json", 
+                        help="APN database json file"
+                        )
+    parser.add_argument("-s", "--serial-port",
+                        type=str,
+                        default="/dev/ttyUSB2",
+                        help="Serial port to communicate with the modem"
+                        )
+    parser.add_argument("-b", "--baudrate",
+                        type=int,
+                        default=115200,
+                        help="Serial port baudrate"
+                        )
+    parser.add_argument("-o", "--output",
+                        type=str,
+                        default="/var/run/apn_conf",
+                        help="Output file path for the current APN"
+                        )
+    parser.add_argument("-m", "--max-try",
+                        type=int,
+                        default=5,
+                        help="How max times to try before using default APN if failed to read ISP from modem"
+                        )
+
+    args = parser.parse_args()
+
+    database = APNDatabase(args.database)
+    serial_port = serial.Serial(args.serial_port, 115200, timeout=0.5)
+    serial_port.flush()
+    isp = None
+
+    for i in range(args.max_try):
+        isp = readISP(serial_port)
+        if isp is not None:
+            break
+ 
+    apn = ""
+    if isp is None:
+        apn = database.getDefaultAPN()
+        syslog.syslog(syslog.LOG_WARNING, "Unable to read ISP from the modem. APN set to default " + apn)
+    else:
+        result = database.getAPN(isp)
+        apn = result[0]
+        if result[1] is False:
+            syslog.syslog(syslog.LOG_WARNING, "ISP " + isp + " not found in the database. APN set to default " + apn)
+        else:
+            syslog.syslog(syslog.LOG_INFO, "APN set to " + apn)
+
+    with open(args.output, 'w') as f:
+        f.write(_APN_CONF_PAT.format(apn=apn))

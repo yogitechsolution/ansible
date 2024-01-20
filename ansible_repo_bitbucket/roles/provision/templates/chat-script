@@ -1,0 +1,8 @@
+ABORT BUSY
+"" AT+CPIN?
+OK AT+CSQ
+OK AT+CNBP?
+OK AT+CNMP?
+OK AT+CGDCONT=1,\"IP\",\"{{ host_apn }}\"
+OK ATD*99#
+CONNECT \c

@@ -1,0 +1,19 @@
+#! /bin/sh                                      
+
+case "$1" in                                    
+	start)                                      
+		echo "PPP is starting"                  
+		/bin/sleep 15                           
+		/etc/ppp/wait-dialup-hardware 40        
+		;;                                      
+	stop)                                       
+		echo "ppp is stopping"                  
+		/usr/sbin/ppp -d                        
+		;;                                      
+	*)                                          
+		echo "Use: /etc/init.d/ppp {start|stop}"
+		exit 1                                  
+		;;                                      
+esac                                            
+
+exit 0                                          

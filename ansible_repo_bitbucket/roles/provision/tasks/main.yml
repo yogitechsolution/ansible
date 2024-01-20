@@ -1,0 +1,73 @@
+---
+- name: Set the hostname
+  ansible.builtin.hostname:
+    name: "{{ hostname }}"
+
+    #Add TZ to hosts.yml
+- name: Set timezone to Stockholm/Europe
+  community.general.timezone:
+    name: Europe/Stockholm
+
+- name: Set language
+  community.general.locale_gen:
+    name: en_US.UTF-8
+    state: present
+
+- name: Set the serial number
+  template: src=serial_no dest=/etc/xshore_ser_no
+
+- name: Set MOTD
+  template: src=motd dest=/etc/motd
+
+- name: Configure GPS
+  ansible.builtin.script:
+    cmd: roles/provision/scripts/configure_gps.sh
+
+- name: Print passwords
+  debug:
+    var: xshore_passwd
+
+- name: Update APT cache and allow release-info to change for repositories
+  ansible.builtin.shell:
+    cmd: apt-get update -y --allow-releaseinfo-change
+   
+- name: Create 'xshore' .ssh dir
+  ansible.builtin.file:
+    path: /home/xshore/.ssh
+    owner: xshore
+    group: users
+    state: directory
+
+- name: Setup BitBucket key (dev only)
+  template: src=bitbucket-id-rsa dest=/home/xshore/.ssh/bitbucket-id-rsa
+  when: "'dev' in group_names "
+
+- name: Setup BitBucket pub key (dev only)
+  template: src=bitbucket-id-rsa.pub dest=/home/xshore/.ssh/bitbucket-id-rsa.pub
+  when: "'dev' in group_names "
+
+    #Read up if connection string can be automated
+- name: Stat remoteiot
+  stat:
+    path: /etc/remote-iot/services/remoteiot.jar
+  register: remoteiot
+
+- name: Install OVPN config
+  template: src=ovpn-xshore.conf dest=/etc/openvpn/client/xshore.conf
+  
+- name: Setup docker-compose
+  ansible.builtin.shell:
+    cmd: "python3 -m pip install docker-compose"
+
+- name: Install remoteiot
+  ansible.builtin.shell:
+    cmd: "curl -s -L 'https://remoteiot.com/install/install.sh' | bash -s '{{ remoteiot_connection_string }}' '{{ hostname }}' '{{ label }}' '{{ remoteiot_group }}' '{{ host_serial }}'"
+  when: remoteiot.stat.exists == False
+
+- name: Add remoteiot autoupgrade
+  ansible.builtin.cron:
+    name: remote-iot
+    minute: 0
+    hour: 2
+    job: curl -s -L https://remoteiot.com/install/upgrade.sh | bash
+    state: present

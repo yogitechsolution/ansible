@@ -1,0 +1,11 @@
+Host *
+  SendEnv LANG LC_*
+  HashKnownHosts yes
+Host xback
+  Hostname 144.76.146.166
+  Port {{ ssh_port }}
+  IdentityFile /home/xshore/.ssh/{{ host_key_rsa }}
+  ServerAliveInterval 60
+  ServerAliveCountMax 4
+  RemoteForward {{ ssh_remote_forward }} localhost:22
+  User rgw

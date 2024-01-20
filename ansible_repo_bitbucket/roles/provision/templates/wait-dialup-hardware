@@ -1,0 +1,20 @@
+#!/bin/bash
+INTERFACE="/dev/ttyUSB3"
+MAX_SECONDS_TIMEOUT=$1
+dsec=$((${MAX_SECONDS_TIMEOUT} * 10))
+for ((retry=0; retry < ${dsec}; retry++))
+do
+    if [ -c ${INTERFACE} ]; then
+        logger "$0: OK existing required device ${INTERFACE} (in $((retry / 10)).$((100 * (retry % 10) / 10)) seconds)"
+        break
+    else
+        sleep 0.1
+    fi
+done
+if [ ! -c ${INTERFACE} ]; then
+    logger "$0: ERROR timeout waiting for required device ${INTERFACE}"
+    exit 1
+fi
+logger "$0: starting pppd for ${PEER_NAME}"
+setsid nohup ppp -c > /dev/null 2>&1 < /dev/null &
+exit 0

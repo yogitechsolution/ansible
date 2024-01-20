@@ -1,0 +1,13 @@
+{
+    "valid_apns":[
+        {
+            "isp": "Tele2 IoT",
+            "apn": "m2m.tele2.com"
+        },
+        {
+            "isp": "Telenor CXN",
+            "apn": "connect.cxn"
+        }
+    ],
+    "default": 0
+}

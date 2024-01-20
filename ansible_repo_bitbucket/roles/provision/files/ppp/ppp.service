@@ -1,0 +1,15 @@
+[Unit]
+Description=Service to start ppp daemon
+BindsTo=dev-ttyUSB3.device
+After=dev-ttyUSB3.device
+
+[Service]
+Type=forking
+ExecStartPre=/etc/ppp/query_apn -s /dev/ttyUSB3 -b 115200
+ExecStart=/usr/sbin/pppd connect '/usr/sbin/chat -v -r /var/log/report-chat -f /etc/ppp/chat-script'
+ExecStop=/usr/sbin/ppp -d
+RestartSec=15
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
