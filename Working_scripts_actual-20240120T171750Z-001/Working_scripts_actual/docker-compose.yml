@@ -1,0 +1,15 @@
+version: '3.3'
+
+services:
+  ansible:
+    network_mode: host
+    build: .
+    volumes:
+      - ".:/root/ansible"
+    secrets:
+      - user_ssh_key
+
+secrets:
+  user_ssh_key:
+    file: ~/.ssh/id_rsa
+

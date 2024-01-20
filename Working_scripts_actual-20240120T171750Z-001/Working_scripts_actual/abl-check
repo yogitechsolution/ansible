@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ ! -e .password ]; then
+	echo "You need to setup the .password file. See README.md"
+	exit
+fi
+
+docker-compose run ansible ansible-playbook --vault-password-file=.password -i hosts.yml provision.yml --check --diff

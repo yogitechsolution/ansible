@@ -1,0 +1,10 @@
+ABORT BUSY
+"" AT+CPIN?
+OK AT+CNBP?
+OK AT+CNMP?
+OK AT+CMTE?
+OK AT+CPSI?
+OK AT+CPMVT?
+OK @/var/run/apn_conf
+OK ATD*99#
+CONNECT /c

@@ -1,0 +1,5 @@
+ssh_monitor_port: 28300
+ssh_remote_forward: 28305
+ssh_port: 20300
+remoteiot_group: dev-boats
+host_key_rsa: eelex_dev_05_rsa

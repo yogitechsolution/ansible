@@ -1,0 +1,5 @@
+ssh_monitor_port: 28200
+ssh_remote_forward: 28205
+ssh_port: 20200
+remoteiot_group: eelex-8000
+host_key_rsa: 8000_2021_05_rsa

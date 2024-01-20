@@ -1,0 +1,19 @@
+#!/bin/sh
+
+HOST=$1
+
+if [ "$HOST" = "" ]; then
+	echo "USAGE: $0 <all|hostname>"
+	exit 0
+fi
+
+if [ ! -e .password ]; then
+	echo "You need to setup the .password file. See README.md"
+	exit
+fi
+
+if [ "$HOST" = "all" ]; then
+	docker-compose run ansible ansible-playbook --vault-password-file=.password -i hosts.yml provision.yml
+else
+	docker-compose run ansible ansible-playbook --vault-password-file=.password -i hosts.yml provision.yml --extra-vars "variable_host=$HOST"
+fi

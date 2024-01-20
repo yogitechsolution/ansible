@@ -1,0 +1,21 @@
+defaultroute
+persist
+replacedefaultroute
+noipdefault
+noauth
+noipx 
+noipv6
+nomp  
+dump  
+usepeerdns
+modem
+#-ac
+/dev/ttyUSB3
+115200
+crtscts
+debug
+asyncmap 0
+default-asyncmap
+lcp-echo-interval 10
+lcp-echo-failure 3
+name ""
